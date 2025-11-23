@@ -1,38 +1,4 @@
 import random
-def save_score(name, score, mode):
-    lines = []
-    found = False
-    try:
-        f=open('scores.txt', 'r')
-        lines = f.readlines()
-        f.close()
-    except FileNotFoundError:
-        pass
-    f=open('scores.txt', 'w')
-    for line in lines:
-            s_name, s_mode, _ = line.strip().split(',')
-            if s_name == name and s_mode == mode:
-                f.write(f"{name},{mode},{score}\n")
-                found = True
-            else:
-                f.write(line)
-    if not found:
-        f.write(f"{name},{mode},{score}\n")
-    f.close()
-    
-def get_score(name, mode):
-    total = 0
-    try:
-        with open('scores.txt', 'r') as f:
-            for line in f:
-                s_name, s_mode, s_score = line.strip().split(',')
-                if s_name == name and s_mode == mode:
-                    total = int(s_score)
-    except FileNotFoundError:
-        total = 0
-    return total
-
-
 def wordle():
     global name
     print('\n\n\t\t\tWELCOME   TO   KINGDOM   OF   WORDS\n\n')
@@ -42,7 +8,11 @@ def wordle():
         print('1.PLAY\n2.HOW TO PLAY\n3.VIEW SCORE\n4.QUIT')
         ch=input('\nWHAT WOULD YOU LIKE TO CHOOSE??')
         if ch=='1':
-            w=['LOAF','LOVE']
+            w=['JUMP','BARK','GLOW','FROG','HUNT','WAVE','MINT','CLUB','DUST','RISK',
+'COIN','MOON','FALL','GIFT','HORN','KING','LAKE','LION','MASK','NOTE',
+'PEAK','POND','RACE','ROAD','SHIP','SNOW','SOIL','STAR','TREE','WIND',
+'AXLE','BEND','CHAT','DIAL','ECHO','FAIR','GRIP','HIDE','IRON','JOIN',
+'KISS','LACE','MULE','NEST','OPEN','PICK','QUIT','ROLL','SAND','TIDE']
             r=random.choice(w)
             for i in range(1,6):
                 ch=input('\nENTER YOUR GUESS(a four letter word):')
@@ -78,7 +48,6 @@ def wordle():
             print("THANK YOU\n\n\n\n")
         else:
             print('Invalid input')
-    save_score(name,p,'wordle')
     
 def rock():
     print('⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠿⠛⠛⠛⠛⠿⣿⣿⣿⣿⣿⣿⣿⣿')
@@ -136,8 +105,7 @@ def scissors():
 
 def rps():
     global name
-    p=0
-    c=0
+    p,c=0,0
     print('\n\n\t\tROCK/PAPER/SCISSORS GAME\n\n')
     print('YOU WILL GET 5 TRIES.......IF YOU SCORE MORE THAN COMPUTER,YOU WIN!!\n\n\n')
     for i in range(5):
@@ -208,26 +176,15 @@ def rps():
     if c>p:
         print('COMPUTER SCORED',c,'POINTS')
         print('YOU LOST FROM COMPUTER.....BETTER LUCK NEXT TIME...YOU LOST 5 POINTS FROM YOUR OVERALL SCORE\n\n')
-        save_score(name, p - 5, "rps")
-
     elif c==p:
         print('YOU AND COMPUTER BOTH SCORED',c,' POINTS.......ITS A TIE\n\n')
     else:
         print('YOU SCORED MORE THAN COMPUTER')
         print('CONGRATS!!!! YOU WON...YOU HAVE GOT ANOTHER POINT IN YOUR OVERALL SCORE\n\n')
-        save_score(name, p + 10, "rps")
-
-    
-def check():
-    global name
-    global score
-    name = input("ENTER YOUR NAME:").lower()
-    save_score(name,score,'rps')
-
 print('\t\t\t\t\t\t\t\t\tJTB PLAYS PRESENTS')
 print('\t\t\t\t\t\t\t\t\t\t JTB ARENA')
 ch=1
-check()
+
 while ch!=3:
     print('1.WORDLE\n2.ROCK/PAPER/SCISSORS\n3.EXIT\n\n')
     ch=int(input('ENTER YOUR CHOICE:'))
@@ -236,8 +193,6 @@ while ch!=3:
     elif ch==2:
         rps()
     elif ch==3:
-        print('\tTHANK YOU',name,'\n HOPE YOU ENJOYED OUR GAME:)')
-        
-        
+        print('\tTHANK YOU',name,'\n HOPE YOU ENJOYED OUR GAME:)')                
     else:
         print('INVALID INPUT')
